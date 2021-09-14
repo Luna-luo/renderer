@@ -135,7 +135,7 @@ const Section1 = (document: BillOfLading): JSX.Element => {
       <div className="flex">
         <div className="w-1/2 border-black border">
           <div className="p-2 h-full flex justify-center items-center">
-            <img data-testid="logo" style={{ width: "150px" }} src="/static/images/logo-tradetrust.svg" />
+            <img data-testid="logo" style={{ width: "150px" }} src="/static/images/logo.png" />
           </div>
         </div>
         <div className="w-1/2">

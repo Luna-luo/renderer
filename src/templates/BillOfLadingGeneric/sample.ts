@@ -14,7 +14,7 @@ export const BillOfLadingGenericSample: BillOfLadingGeneric = {
     },
   ],
   blNumber: "SGCNM21566325",
-  logo: "/static/images/logo-tradetrust.svg",
+  logo: "/static/images/logo.png",
   companyName: "GovTech SG",
   field1: "Hello",
   field2: "Hello",

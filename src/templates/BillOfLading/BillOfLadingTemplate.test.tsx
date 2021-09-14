@@ -11,6 +11,6 @@ describe("bill of lading", () => {
 
   it("should render tradetrust logo", () => {
     render(<BillOfLadingTemplate document={BillOfLadingSample} handleObfuscation={() => {}} />);
-    expect(screen.getByTestId("logo")).toHaveAttribute("src", "/static/images/logo-tradetrust.svg");
+    expect(screen.getByTestId("logo")).toHaveAttribute("src", "/static/images/logo.png");
   });
 });
