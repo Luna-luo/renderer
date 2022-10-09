@@ -7,15 +7,18 @@ import { BillOfLading } from "./types";
 const smallText = (text: string): JSX.Element => <div style={{ fontSize: "0.8em" }}>{text}</div>;
 
 const Section3 = (document: BillOfLading): JSX.Element => {
+  const { bl_freight_and_charges, bl_freight_collect_or_prepaid,bl_signer,  bl_issue_place, bl_issue_date, bl_on_board_date} = document.documents[0]
   const carrierName = document.carrierName;
   return (
     <div className="border-black border">
       <div className="flex">
         <div className="w-1/4 border-black border">
           <div className="p-2 h-24">{smallText("Freight & Charges")}</div>
+          { bl_freight_and_charges }
         </div>
         <div className="flex-grow border-black border">
           <div className="p-2 h-24">{smallText("Rule")}</div>
+          {bl_freight_collect_or_prepaid}
         </div>
         <div className="flex-grow border-black border">
           <div className="p-2 h-24">{smallText("Unit")}</div>
@@ -57,6 +60,7 @@ const Section3 = (document: BillOfLading): JSX.Element => {
               </div>
               <div className="w-1/2 border-black border">
                 <div className="p-2">{smallText("Date of Issue of B/L")}</div>
+                {bl_issue_date}
               </div>
             </div>
 
@@ -66,6 +70,7 @@ const Section3 = (document: BillOfLading): JSX.Element => {
               </div>
               <div className="w-1/2 border-black border">
                 <div className="p-2">{smallText("Shipped on Board Date (Local Time)")}</div>
+                {bl_on_board_date}
               </div>
             </div>
           </div>
@@ -77,7 +82,7 @@ const Section3 = (document: BillOfLading): JSX.Element => {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sagittis id consectetur purus ut faucibus. Diam quam nulla porttitor massa. Eu tincidunt tortor aliquam nulla facilisi cras fermentum. Amet mauris commodo quis imperdiet massa tincidunt. Luctus accumsan tortor posuere ac ut. Eu volutpat odio facilisis mauris sit amet massa vitae tortor. Eros donec ac odio tempor orci dapibus. Varius morbi enim nunc faucibus a pellentesque sit amet. Velit aliquet sagittis id consectetur purus ut. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero. Odio ut sem nulla pharetra diam sit. Nunc sed augue lacus viverra vitae congue eu consequat ac. Eros in cursus turpis massa tincidunt dui ut ornare lectus."
             )}
             <div className="text-center mt-4 mb-16">
-              <strong>{smallText(`Signed for the Carrier ${carrierName || ""}`)}</strong>
+              <strong>{smallText(`Signed for the Carrier ${bl_signer || ""}`)}</strong>
             </div>
             <hr />
             <div className="text-center mt-2">
@@ -95,6 +100,7 @@ const Section2 = (document: BillOfLading): JSX.Element => {
   const renderedKindOfPackage = packages.map((pkg, index) => <div key={index}>{pkg.description}</div>);
   const renderedWeight = packages.map((pkg, index) => <div key={index}>{pkg.weight}</div>);
   const renderedMeasurement = packages.map((pkg, index) => <div key={index}>{pkg.measurement}</div>);
+  const { bl_total_nw, bl_measurement } = document.documents[0];
 
   return (
     <div className="border-black border">
@@ -114,13 +120,13 @@ const Section2 = (document: BillOfLading): JSX.Element => {
         <div className="w-1/5 border-black border">
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Weight</div>
-            {renderedWeight}
+            {bl_total_nw}
           </div>
         </div>
         <div className="w-1/5 border-black border">
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Measurement</div>
-            {renderedMeasurement}
+            {bl_measurement}
           </div>
         </div>
       </div>
@@ -129,7 +135,8 @@ const Section2 = (document: BillOfLading): JSX.Element => {
 };
 
 const Section1 = (document: BillOfLading): JSX.Element => {
-  const { shipper = {}, scac, blNumber, consignee = {}, notifyParty = {} } = document;
+  const { scac } = document;
+  const {bl_lc_id, bl_id, bl_shipper,bl_shipper_address, bl_shipper_contacts, bl_consignee,bl_notify_party,bl_vessel,bl_voyage_number,bl_port_of_loading,bl_port_of_discharge} = document.documents[0]
   return (
     <div className="border-black border">
       <div className="flex">
@@ -150,7 +157,7 @@ const Section1 = (document: BillOfLading): JSX.Element => {
                 SCAC <strong>{scac}</strong>
               </div>
               <div className="p-2">
-                B/L No <strong className="break-all">{blNumber}</strong>
+                B/L No <strong className="break-all">{bl_lc_id}</strong>
               </div>
             </div>
           </div>
@@ -162,16 +169,16 @@ const Section1 = (document: BillOfLading): JSX.Element => {
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Shipper</div>
             <div className="p-4">
-              <div>{shipper.name || ""}</div>
-              <div>{(shipper.address && shipper.address.street) || ""}</div>
-              <div>{(shipper.address && shipper.address.country) || ""}</div>
+              <div>{bl_shipper || ""}</div>
+              <div>{bl_shipper_address || ""}</div>
+              <div>{bl_shipper_contacts || ""}</div>
             </div>
           </div>
         </div>
         <div className="w-1/2 border-black border">
           <div className="p-2 border-black border-b-2">
             <div style={{ fontSize: "0.8em" }}>Booking No</div>
-            <div>{blNumber}</div>
+            <div>{bl_id}</div>
           </div>
           <div className="p-2 border-black border-b-2">
             <div style={{ fontSize: "0.8em" }}>Export references</div>
@@ -193,7 +200,7 @@ const Section1 = (document: BillOfLading): JSX.Element => {
             </div>
             <div className="p-4">
               <div>TO THE ORDER OF</div>
-              <div>{consignee.name || ""}</div>
+              <div>{bl_consignee || ""}</div>
             </div>
           </div>
         </div>
@@ -201,7 +208,7 @@ const Section1 = (document: BillOfLading): JSX.Element => {
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Notify Party (see clause 22)</div>
             <div className="p-4">
-              <div>{notifyParty.name || ""}</div>
+              <div>{bl_notify_party || ""}</div>
             </div>
           </div>
         </div>
@@ -211,13 +218,13 @@ const Section1 = (document: BillOfLading): JSX.Element => {
         <div className="w-1/4 border-black border">
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Vessel (see clause 1 + 19)</div>
-            <div className="break-words">{document.vessel || ""}</div>
+            <div className="break-words">{bl_vessel || ""}</div>
           </div>
         </div>
         <div className="w-1/4 border-black border">
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Voyage No.</div>
-            <div className="break-all">{document.voyageNo || ""}</div>
+            <div className="break-all">{bl_voyage_number || ""}</div>
           </div>
         </div>
         <div className="w-1/2 border-black border">
@@ -231,13 +238,13 @@ const Section1 = (document: BillOfLading): JSX.Element => {
         <div className="w-1/4 border-black border">
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Port of Loading</div>
-            <div className="break-words">{document.portOfLoading || ""}</div>
+            <div className="break-words">{bl_port_of_loading || ""}</div>
           </div>
         </div>
         <div className="w-1/4 border-black border">
           <div className="p-2">
             <div style={{ fontSize: "0.8em" }}>Port of Discharge</div>
-            <div className="break-words">{document.portOfDischarge || ""}</div>
+            <div className="break-words">{bl_port_of_discharge || ""}</div>
           </div>
         </div>
         <div className="w-1/2 border-black border">

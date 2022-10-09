@@ -2,17 +2,18 @@ import { v2 } from "@govtechsg/open-attestation";
 
 export interface BillOfLading extends v2.OpenAttestationDocument {
   scac: string;
-  blNumber: string;
-  vessel: string;
-  voyageNo: string;
-  portOfLoading: string;
-  portOfDischarge: string;
+  blNumber?: string;
+  vessel?: string;
+  voyageNo?: string;
+  portOfLoading?: string;
+  portOfDischarge?: string;
   carrierName?: string;
   packages?: {
     description: string;
     weight: string;
     measurement: string;
   }[];
+  documents: any[];
   shipper?: {
     name?: string;
     address?: {
