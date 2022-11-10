@@ -18,7 +18,7 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "cbf-my.hrlyit.com"
+              "location": "aaa.com"
             },
             "name": "DEMO TOKEN REGISTRY",
             "tokenRegistry": "0x6F7FE928A33d99eBD480a335373B6DdFDCef3397"
